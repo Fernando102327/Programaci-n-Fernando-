@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="43">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"--- Mi Tabla Dark Souls Remastered ---"</Description>
+      <LastState/>
+      <Options moHideChildren="1"/>
+      <Color>C0C0C0</Color>
+      <CheatEntries>
+
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>"Daño Infinito al Enemigo (muerte de un solo golpe)"</Description>
+          <LastState Activated="0"/>
+          <VariableType>4 Bytes</VariableType>
+          <Value>0</Value>
+          <!-- Sigue los pasos de escaneo (Vida/HP del enemigo) y pega aquí la dirección que encuentres. -->
+          <Address>00000000</Address>
+        </CheatEntry>
+
+        <CheatEntry>
+          <ID>3</ID>
+          <Description>"No Recibir Daño (mi Vida/HP)"</Description>
+          <LastState Activated="0"/>
+          <VariableType>4 Bytes</VariableType>
+          <Value>0</Value>
+          <!-- Sigue los pasos de escaneo (tu propia Vida/HP) y pega aquí la dirección que encuentres. -->
+          <Address>00000000</Address>
+        </CheatEntry>
+
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"Multiplicador de Daño (arma equipada)"</Description>
+          <LastState Activated="0"/>
+          <VariableType>Float</VariableType>
+          <Value>1.0</Value>
+          <!-- Encuéntralo con clic derecho > 'Averiguar qué accede a esta dirección' (en Cheat Engine en inglés aparece como 'Find out what accesses this address') sobre la Vida/HP del enemigo mientras golpeas, y sube hasta la instrucción que resta el daño calculado. -->
+          <Address>00000000</Address>
+        </CheatEntry>
+
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>
