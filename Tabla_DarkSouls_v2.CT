@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="43">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>24</ID>
+      <Description>&quot;--- Mi Tabla Dark Souls Remastered v2 ---&quot;</Description>
+      <LastState/>
+      <Options moManualExpandCollapse="1"/>
+      <Color>C0C0C0</Color>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>5</ID>
+          <Description>&quot;0) ACTIVAR PRIMERO: Inicializar (buscar punteros)&quot;</Description>
+          <LastState/>
+          <Color>0000FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>
+[ENABLE]
+{$lua}
+if syntaxcheck then return end
+
+-- Busca una instruccion &quot;mov rax,[rip+XX]&quot; y devuelve la direccion a la que apunta
+local function buscarPunteroRip(aob)
+  local res = AOBScan(aob, &quot;+X-C&quot;)
+  if res == nil then return nil end
+  if res.Count == 0 then res.destroy() return nil end
+  local lista = {}
+  for i = 0, res.Count - 1 do
+    local addr = tonumber(res[i], 16)
+    local disp = readInteger(addr + 3)
+    if disp ~= nil then
+      if disp &gt; 0x7FFFFFFF then disp = disp - 0x100000000 end
+      lista[#lista + 1] = addr + 7 + disp
+    end
+  end
+  res.destroy()
+  return lista
+end
+
+local function hpValido(ptr)
+  local base = readQword(ptr)
+  if base == nil or base == 0 then return false end
+  local jugador = readQword(base + 0x68)
+  if jugador == nil or jugador == 0 then return false end
+  local hp = readInteger(jugador + 0x3E8)
+  local hpMax = readInteger(jugador + 0x3EC)
+  if hp == nil or hpMax == nil then return false end
+  return hpMax &gt; 0 and hpMax &lt; 10000 and hp &gt;= 0 and not (hp &gt; hpMax)
+end
+
+local function almasValidas(ptr)
+  local base = readQword(ptr)
+  if base == nil or base == 0 then return false end
+  local datos = readQword(base + 0x10)
+  if datos == nil or datos == 0 then return false end
+  local almas = readInteger(datos + 0x94)
+  return almas ~= nil and almas &gt;= 0 and not (almas &gt; 999999999)
+end
+
+local aobsWorldChrMan = {
+  &quot;48 8B 05 ?? ?? ?? ?? 48 8B 48 68 48 85 C9 0F 84 ?? ?? ?? ?? 48 39 5E 10 0F 84 ?? ?? ?? ?? 48&quot;,
+  &quot;48 8B 05 ?? ?? ?? ?? 48 39 48 68 0F 94 C0 C3&quot;,
+}
+local aobsGameDataMan = {
+  &quot;48 8B 05 ?? ?? ?? ?? 45 33 ED 48 8B F1 48 85 C0&quot;,
+  &quot;48 8B 05 ?? ?? ?? ?? 48 8B 40 10 48 85 C0&quot;,
+}
+
+local function encontrar(aobs, validar)
+  for _, aob in ipairs(aobs) do
+    local lista = buscarPunteroRip(aob)
+    if lista ~= nil then
+      for _, p in ipairs(lista) do
+        if validar(p) then return p end
+      end
+    end
+  end
+  return nil
+end
+
+local wcm = encontrar(aobsWorldChrMan, hpValido)
+local gdm = encontrar(aobsGameDataMan, almasValidas)
+
+local msg = &quot;&quot;
+if wcm ~= nil then
+  unregisterSymbol(&quot;WorldChrMan&quot;)
+  registerSymbol(&quot;WorldChrMan&quot;, wcm, true)
+  msg = msg .. &quot;WorldChrMan encontrado (Vida / Estamina): OK\n&quot;
+else
+  msg = msg .. &quot;WorldChrMan NO encontrado. Usa las direcciones manuales de Vida y Estamina.\n&quot;
+end
+if gdm ~= nil then
+  unregisterSymbol(&quot;GameDataMan&quot;)
+  registerSymbol(&quot;GameDataMan&quot;, gdm, true)
+  msg = msg .. &quot;GameDataMan encontrado (Almas): OK\n&quot;
+else
+  msg = msg .. &quot;GameDataMan NO encontrado. Usa la direccion manual de Almas.\n&quot;
+end
+print(msg)
+{$asm}
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+unregisterSymbol(&quot;WorldChrMan&quot;)
+unregisterSymbol(&quot;GameDataMan&quot;)
+{$asm}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>6</ID>
+          <Description>&quot;Vida Infinita  [F1]&quot;</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+
+function DSR_leerManual(descripcion)
+  local mr = getAddressList().getMemoryRecordByDescription(descripcion)
+  if mr == nil then return nil end
+  local a = mr.CurrentAddress
+  if a == nil or a == 0 then return nil end
+  return a
+end
+
+function DSR_jugador()
+  local ok, wcm = pcall(getAddress, &quot;WorldChrMan&quot;)
+  if not ok or wcm == nil or wcm == 0 then return nil end
+  local base = readQword(wcm)
+  if base == nil or base == 0 then return nil end
+  local jugador = readQword(base + 0x68)
+  if jugador == nil or jugador == 0 then return nil end
+  return jugador
+end
+
+function DSR_datosJugador()
+  local ok, gdm = pcall(getAddress, &quot;GameDataMan&quot;)
+  if not ok or gdm == nil or gdm == 0 then return nil end
+  local base = readQword(gdm)
+  if base == nil or base == 0 then return nil end
+  local datos = readQword(base + 0x10)
+  if datos == nil or datos == 0 then return nil end
+  return datos
+end
+
+DSR_timers = DSR_timers or {}
+
+function DSR_iniciar(nombre, intervalo, funcion)
+  DSR_detener(nombre)
+  local t = createTimer(nil, false)
+  t.Interval = intervalo
+  t.OnTimer = function() pcall(funcion) end
+  t.Enabled = true
+  DSR_timers[nombre] = t
+end
+
+function DSR_detener(nombre)
+  if DSR_timers[nombre] ~= nil then
+    DSR_timers[nombre].destroy()
+    DSR_timers[nombre] = nil
+  end
+end
+
+DSR_iniciar(&quot;vida&quot;, 100, function()
+  local j = DSR_jugador()
+  if j ~= nil then
+    local hpMax = readInteger(j + 0x3EC)
+    if hpMax ~= nil and hpMax &gt; 0 then writeInteger(j + 0x3E8, hpMax) end
+    return
+  end
+  local hp = DSR_leerManual(&quot;Mi HP (manual)&quot;)
+  local hpMax = DSR_leerManual(&quot;Mi HP Max (manual)&quot;)
+  if hp ~= nil and hpMax ~= nil then
+    writeInteger(hp, readInteger(hpMax))
+  elseif hp ~= nil then
+    writeInteger(hp, 9999)
+  end
+end)
+
+{$asm}
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+DSR_detener(&quot;vida&quot;)
+{$asm}
+</AssemblerScript>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>112</Key>
+              </Keys>
+              <ID>0</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>7</ID>
+          <Description>&quot;Estamina Infinita  [F2]&quot;</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+
+function DSR_leerManual(descripcion)
+  local mr = getAddressList().getMemoryRecordByDescription(descripcion)
+  if mr == nil then return nil end
+  local a = mr.CurrentAddress
+  if a == nil or a == 0 then return nil end
+  return a
+end
+
+function DSR_jugador()
+  local ok, wcm = pcall(getAddress, &quot;WorldChrMan&quot;)
+  if not ok or wcm == nil or wcm == 0 then return nil end
+  local base = readQword(wcm)
+  if base == nil or base == 0 then return nil end
+  local jugador = readQword(base + 0x68)
+  if jugador == nil or jugador == 0 then return nil end
+  return jugador
+end
+
+function DSR_datosJugador()
+  local ok, gdm = pcall(getAddress, &quot;GameDataMan&quot;)
+  if not ok or gdm == nil or gdm == 0 then return nil end
+  local base = readQword(gdm)
+  if base == nil or base == 0 then return nil end
+  local datos = readQword(base + 0x10)
+  if datos == nil or datos == 0 then return nil end
+  return datos
+end
+
+DSR_timers = DSR_timers or {}
+
+function DSR_iniciar(nombre, intervalo, funcion)
+  DSR_detener(nombre)
+  local t = createTimer(nil, false)
+  t.Interval = intervalo
+  t.OnTimer = function() pcall(funcion) end
+  t.Enabled = true
+  DSR_timers[nombre] = t
+end
+
+function DSR_detener(nombre)
+  if DSR_timers[nombre] ~= nil then
+    DSR_timers[nombre].destroy()
+    DSR_timers[nombre] = nil
+  end
+end
+
+DSR_iniciar(&quot;estamina&quot;, 50, function()
+  local j = DSR_jugador()
+  if j ~= nil then
+    local spMax = readInteger(j + 0x3FC)
+    if spMax ~= nil and spMax &gt; 0 then writeInteger(j + 0x3F8, spMax) end
+    return
+  end
+  local sp = DSR_leerManual(&quot;Mi Estamina (manual)&quot;)
+  local spMax = DSR_leerManual(&quot;Mi Estamina Max (manual)&quot;)
+  if sp ~= nil and spMax ~= nil then
+    writeInteger(sp, readInteger(spMax))
+  elseif sp ~= nil then
+    writeInteger(sp, 999)
+  end
+end)
+
+{$asm}
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+DSR_detener(&quot;estamina&quot;)
+{$asm}
+</AssemblerScript>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>113</Key>
+              </Keys>
+              <ID>0</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>8</ID>
+          <Description>&quot;Almas Infinitas  [F3]&quot;</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+
+function DSR_leerManual(descripcion)
+  local mr = getAddressList().getMemoryRecordByDescription(descripcion)
+  if mr == nil then return nil end
+  local a = mr.CurrentAddress
+  if a == nil or a == 0 then return nil end
+  return a
+end
+
+function DSR_jugador()
+  local ok, wcm = pcall(getAddress, &quot;WorldChrMan&quot;)
+  if not ok or wcm == nil or wcm == 0 then return nil end
+  local base = readQword(wcm)
+  if base == nil or base == 0 then return nil end
+  local jugador = readQword(base + 0x68)
+  if jugador == nil or jugador == 0 then return nil end
+  return jugador
+end
+
+function DSR_datosJugador()
+  local ok, gdm = pcall(getAddress, &quot;GameDataMan&quot;)
+  if not ok or gdm == nil or gdm == 0 then return nil end
+  local base = readQword(gdm)
+  if base == nil or base == 0 then return nil end
+  local datos = readQword(base + 0x10)
+  if datos == nil or datos == 0 then return nil end
+  return datos
+end
+
+DSR_timers = DSR_timers or {}
+
+function DSR_iniciar(nombre, intervalo, funcion)
+  DSR_detener(nombre)
+  local t = createTimer(nil, false)
+  t.Interval = intervalo
+  t.OnTimer = function() pcall(funcion) end
+  t.Enabled = true
+  DSR_timers[nombre] = t
+end
+
+function DSR_detener(nombre)
+  if DSR_timers[nombre] ~= nil then
+    DSR_timers[nombre].destroy()
+    DSR_timers[nombre] = nil
+  end
+end
+
+DSR_ALMAS_OBJETIVO = 9999999
+DSR_iniciar(&quot;almas&quot;, 250, function()
+  local d = DSR_datosJugador()
+  local dir = nil
+  if d ~= nil then dir = d + 0x94 else dir = DSR_leerManual(&quot;Mis Almas (manual)&quot;) end
+  if dir ~= nil then
+    local actual = readInteger(dir)
+    if actual ~= nil and DSR_ALMAS_OBJETIVO &gt; actual then
+      writeInteger(dir, DSR_ALMAS_OBJETIVO)
+    end
+  end
+end)
+
+{$asm}
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+DSR_detener(&quot;almas&quot;)
+{$asm}
+</AssemblerScript>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>114</Key>
+              </Keys>
+              <ID>0</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>9</ID>
+          <Description>&quot;Matar de un Golpe (HP enemigo = 1)  [F4]&quot;</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+
+function DSR_leerManual(descripcion)
+  local mr = getAddressList().getMemoryRecordByDescription(descripcion)
+  if mr == nil then return nil end
+  local a = mr.CurrentAddress
+  if a == nil or a == 0 then return nil end
+  return a
+end
+
+function DSR_jugador()
+  local ok, wcm = pcall(getAddress, &quot;WorldChrMan&quot;)
+  if not ok or wcm == nil or wcm == 0 then return nil end
+  local base = readQword(wcm)
+  if base == nil or base == 0 then return nil end
+  local jugador = readQword(base + 0x68)
+  if jugador == nil or jugador == 0 then return nil end
+  return jugador
+end
+
+function DSR_datosJugador()
+  local ok, gdm = pcall(getAddress, &quot;GameDataMan&quot;)
+  if not ok or gdm == nil or gdm == 0 then return nil end
+  local base = readQword(gdm)
+  if base == nil or base == 0 then return nil end
+  local datos = readQword(base + 0x10)
+  if datos == nil or datos == 0 then return nil end
+  return datos
+end
+
+DSR_timers = DSR_timers or {}
+
+function DSR_iniciar(nombre, intervalo, funcion)
+  DSR_detener(nombre)
+  local t = createTimer(nil, false)
+  t.Interval = intervalo
+  t.OnTimer = function() pcall(funcion) end
+  t.Enabled = true
+  DSR_timers[nombre] = t
+end
+
+function DSR_detener(nombre)
+  if DSR_timers[nombre] ~= nil then
+    DSR_timers[nombre].destroy()
+    DSR_timers[nombre] = nil
+  end
+end
+
+DSR_iniciar(&quot;oneshot&quot;, 50, function()
+  local dir = DSR_leerManual(&quot;HP del Enemigo (manual)&quot;)
+  if dir ~= nil then
+    local hp = readInteger(dir)
+    if hp ~= nil and hp &gt; 1 then writeInteger(dir, 1) end
+  end
+end)
+
+{$asm}
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+DSR_detener(&quot;oneshot&quot;)
+{$asm}
+</AssemblerScript>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>115</Key>
+              </Keys>
+              <ID>0</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>10</ID>
+          <Description>&quot;Cambio de Velocidad  [F5-F8]&quot;</Description>
+          <LastState/>
+          <Options moManualExpandCollapse="1"/>
+          <Color>C0C0C0</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>1</ID>
+              <Description>&quot;Velocidad x0.5 (camara lenta)&quot;</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+do local o = getAddressList().getMemoryRecordByDescription(&quot;Velocidad x1.5&quot;)
+  if o ~= nil and o.Active then o.Active = false end end
+do local o = getAddressList().getMemoryRecordByDescription(&quot;Velocidad x2&quot;)
+  if o ~= nil and o.Active then o.Active = false end end
+do local o = getAddressList().getMemoryRecordByDescription(&quot;Velocidad x3&quot;)
+  if o ~= nil and o.Active then o.Active = false end end
+speedhack_setSpeed(0.5)
+{$asm}
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+speedhack_setSpeed(1.0)
+{$asm}
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>116</Key>
+                  </Keys>
+                  <ID>0</ID>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>2</ID>
+              <Description>&quot;Velocidad x1.5&quot;</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+do local o = getAddressList().getMemoryRecordByDescription(&quot;Velocidad x0.5 (camara lenta)&quot;)
+  if o ~= nil and o.Active then o.Active = false end end
+do local o = getAddressList().getMemoryRecordByDescription(&quot;Velocidad x2&quot;)
+  if o ~= nil and o.Active then o.Active = false end end
+do local o = getAddressList().getMemoryRecordByDescription(&quot;Velocidad x3&quot;)
+  if o ~= nil and o.Active then o.Active = false end end
+speedhack_setSpeed(1.5)
+{$asm}
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+speedhack_setSpeed(1.0)
+{$asm}
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>117</Key>
+                  </Keys>
+                  <ID>0</ID>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>3</ID>
+              <Description>&quot;Velocidad x2&quot;</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+do local o = getAddressList().getMemoryRecordByDescription(&quot;Velocidad x0.5 (camara lenta)&quot;)
+  if o ~= nil and o.Active then o.Active = false end end
+do local o = getAddressList().getMemoryRecordByDescription(&quot;Velocidad x1.5&quot;)
+  if o ~= nil and o.Active then o.Active = false end end
+do local o = getAddressList().getMemoryRecordByDescription(&quot;Velocidad x3&quot;)
+  if o ~= nil and o.Active then o.Active = false end end
+speedhack_setSpeed(2.0)
+{$asm}
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+speedhack_setSpeed(1.0)
+{$asm}
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>118</Key>
+                  </Keys>
+                  <ID>0</ID>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>4</ID>
+              <Description>&quot;Velocidad x3&quot;</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+do local o = getAddressList().getMemoryRecordByDescription(&quot;Velocidad x0.5 (camara lenta)&quot;)
+  if o ~= nil and o.Active then o.Active = false end end
+do local o = getAddressList().getMemoryRecordByDescription(&quot;Velocidad x1.5&quot;)
+  if o ~= nil and o.Active then o.Active = false end end
+do local o = getAddressList().getMemoryRecordByDescription(&quot;Velocidad x2&quot;)
+  if o ~= nil and o.Active then o.Active = false end end
+speedhack_setSpeed(3.0)
+{$asm}
+
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+speedhack_setSpeed(1.0)
+{$asm}
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>119</Key>
+                  </Keys>
+                  <ID>0</ID>
+                </Hotkey>
+              </Hotkeys>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>16</ID>
+          <Description>&quot;Valores (solo lectura, tras inicializar)&quot;</Description>
+          <LastState/>
+          <Options moManualExpandCollapse="1"/>
+          <Color>C0C0C0</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>11</ID>
+              <Description>&quot;Mi HP&quot;</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>WorldChrMan</Address>
+              <Offsets>
+                <Offset>3E8</Offset>
+                <Offset>68</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>12</ID>
+              <Description>&quot;Mi HP Max&quot;</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>WorldChrMan</Address>
+              <Offsets>
+                <Offset>3EC</Offset>
+                <Offset>68</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>13</ID>
+              <Description>&quot;Mi Estamina&quot;</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>WorldChrMan</Address>
+              <Offsets>
+                <Offset>3F8</Offset>
+                <Offset>68</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>14</ID>
+              <Description>&quot;Mi Estamina Max&quot;</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>WorldChrMan</Address>
+              <Offsets>
+                <Offset>3FC</Offset>
+                <Offset>68</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>15</ID>
+              <Description>&quot;Mis Almas&quot;</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>GameDataMan</Address>
+              <Offsets>
+                <Offset>94</Offset>
+                <Offset>10</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>23</ID>
+          <Description>&quot;Direcciones manuales (plan B)&quot;</Description>
+          <LastState/>
+          <Options moManualExpandCollapse="1"/>
+          <Color>C0C0C0</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>17</ID>
+              <Description>&quot;HP del Enemigo (manual)&quot;</Description>
+              <!-- Escanea el HP del enemigo y pega aqui la direccion. Necesario para Matar de un Golpe. -->
+              <VariableType>4 Bytes</VariableType>
+              <Address>00000000</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>18</ID>
+              <Description>&quot;Mi HP (manual)&quot;</Description>
+              <!-- Solo si la inicializacion falla. -->
+              <VariableType>4 Bytes</VariableType>
+              <Address>00000000</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>19</ID>
+              <Description>&quot;Mi HP Max (manual)&quot;</Description>
+              <!-- Solo si la inicializacion falla. -->
+              <VariableType>4 Bytes</VariableType>
+              <Address>00000000</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>20</ID>
+              <Description>&quot;Mi Estamina (manual)&quot;</Description>
+              <!-- Solo si la inicializacion falla. -->
+              <VariableType>4 Bytes</VariableType>
+              <Address>00000000</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>21</ID>
+              <Description>&quot;Mi Estamina Max (manual)&quot;</Description>
+              <!-- Solo si la inicializacion falla. -->
+              <VariableType>4 Bytes</VariableType>
+              <Address>00000000</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>22</ID>
+              <Description>&quot;Mis Almas (manual)&quot;</Description>
+              <!-- Solo si la inicializacion falla. -->
+              <VariableType>4 Bytes</VariableType>
+              <Address>00000000</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
