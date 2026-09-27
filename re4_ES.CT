@@ -1,0 +1,2310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>19021</ID>
+      <Description>"Permitir VEH"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$LUA}
+if syntaxcheck then return end
+local symbolName = "KERNELBASE.SetThreadContext"
+
+[ENABLE]
+local bt = {195, 144, 144, 144} --C3 90 90 90 (ret nop nop nop)
+writeBytes(symbolName, bt)
+
+[DISABLE]
+local bt = {72, 131, 236, 40} --48 83 EC 28 (sub rsp, 28)
+writeBytes(symbolName, bt)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"[ACTIVAR]"</Description>
+      <Options moHideChildren="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>// Original Code by G40sty.
+[ENABLE]
+{$lua}
+local gameName = "Resident Evil 4"
+local gameProcess = "re4.exe"
+if getProcessIDFromProcessName(gameProcess) ~= nil then
+   if readInteger(process) == nil then
+      openProcess(gameProcess)
+   else
+       if readInteger(process) ~= readInteger(gameProcess) then
+          openProcess(gameProcess)
+      end
+   end
+else
+    beep() error(showMessage(string.format("%s no se está ejecutando.",gameName)))
+end
+--; Auto Attach Process For User
+if syntaxcheck then return end
+if messageDialog([[
+Copyright © 2023 OpenCheatTables.com
+Creador de la tabla: Marcus101RR
+¿Quieres leer información adicional?
+]],mtInformation,mbYes,mbNo) == mrYes then
+messageDialog("Esta información se ha añadido para disuadir a los usuarios de FRF (Fearless Revolution Forums) de violar la licencia GPL. Por la presente se te informa de que queda estrictamente prohibido distribuir, subir o modificar esta tabla en FRF, con o sin el consentimiento de este autor. Todas las demás fuentes están permitidas con permiso.")
+else
+end
+
+
+[DISABLE]
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>38</ID>
+          <Description>"[PUNTEROS]"</Description>
+          <Options moHideChildren="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+define(RE4_Money,RE4.exe+DBEA420)
+define(RE4_Player,RE4.exe+DC028A8)
+define(RE4_Capacity,RE4.exe+DBF4A30)
+define(RE4_Craft,re4.exe+DBF4110)
+define(RE4_Spinel,RE4.exe+DBBF9A8)
+define(RE4_Stats,RE4.exe+D249D18)
+
+registersymbol(RE4_Money)
+registersymbol(RE4_Player)
+registersymbol(RE4_Capacity)
+registersymbol(RE4_Craft)
+registersymbol(RE4_Spinel)
+registersymbol(RE4_Stats)
+
+[DISABLE]
+unregistersymbol(RE4_Money)
+unregistersymbol(RE4_Player)
+unregistersymbol(RE4_Capacity)
+unregistersymbol(RE4_Craft)
+unregistersymbol(RE4_Spinel)
+unregistersymbol(RE4_Stats)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>19062</ID>
+              <Description>"Datos"</Description>
+              <Options moHideChildren="1"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>19024</ID>
+                  <Description>"Capacidad del inventario"</Description>
+                  <Options moHideChildren="1"/>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>19156</ID>
+                      <Description>"Munición de pistola"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>RE4_Capacity</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>18</Offset>
+                        <Offset>48</Offset>
+                        <Offset>48</Offset>
+                        <Offset>50</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19126</ID>
+                      <Description>"Munición de magnum"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>RE4_Capacity</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>18</Offset>
+                        <Offset>60</Offset>
+                        <Offset>48</Offset>
+                        <Offset>50</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19127</ID>
+                      <Description>"Munición de escopeta"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>RE4_Capacity</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>18</Offset>
+                        <Offset>78</Offset>
+                        <Offset>48</Offset>
+                        <Offset>50</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19130</ID>
+                      <Description>"Munición de fusil"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>RE4_Capacity</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>18</Offset>
+                        <Offset>90</Offset>
+                        <Offset>48</Offset>
+                        <Offset>50</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19131</ID>
+                      <Description>"Munición de subfusil"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>RE4_Capacity</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>18</Offset>
+                        <Offset>A8</Offset>
+                        <Offset>48</Offset>
+                        <Offset>50</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19268</ID>
+                      <Description>"Virotes"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>RE4_Capacity</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>18</Offset>
+                        <Offset>C0</Offset>
+                        <Offset>48</Offset>
+                        <Offset>50</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19144</ID>
+                      <Description>"Spray de primeros auxilios"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>RE4_Capacity</Address>
+                      <Offsets>
+                        <Offset>18</Offset>
+                        <Offset>18</Offset>
+                        <Offset>258</Offset>
+                        <Offset>48</Offset>
+                        <Offset>50</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19169</ID>
+                      <Description>"Spray de primeros auxilios"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>RE4_Capacity</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>18</Offset>
+                        <Offset>258</Offset>
+                        <Offset>48</Offset>
+                        <Offset>50</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19145</ID>
+                      <Description>"Víbora"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>RE4_Capacity</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>18</Offset>
+                        <Offset>2B8</Offset>
+                        <Offset>48</Offset>
+                        <Offset>50</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19034</ID>
+                      <Description>"Pólvora"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>RE4_Capacity</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>18</Offset>
+                        <Offset>390</Offset>
+                        <Offset>48</Offset>
+                        <Offset>50</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19038</ID>
+                      <Description>"Recursos (G)"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>RE4_Capacity</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>18</Offset>
+                        <Offset>3A8</Offset>
+                        <Offset>48</Offset>
+                        <Offset>50</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19037</ID>
+                      <Description>"Recursos (P)"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>RE4_Capacity</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>18</Offset>
+                        <Offset>3F0</Offset>
+                        <Offset>48</Offset>
+                        <Offset>50</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19136</ID>
+                      <Description>"Granada de mano"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>RE4_Capacity</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>18</Offset>
+                        <Offset>1638</Offset>
+                        <Offset>48</Offset>
+                        <Offset>50</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19137</ID>
+                      <Description>"Granada pesada"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>RE4_Capacity</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>18</Offset>
+                        <Offset>1650</Offset>
+                        <Offset>48</Offset>
+                        <Offset>50</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19135</ID>
+                      <Description>"Granada cegadora"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>RE4_Capacity</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>18</Offset>
+                        <Offset>1668</Offset>
+                        <Offset>48</Offset>
+                        <Offset>50</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>19063</ID>
+                  <Description>"Fabricación"</Description>
+                  <Options moHideChildren="1"/>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>19173</ID>
+                      <Description>"Normal"</Description>
+                      <Options moHideChildren="1"/>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>19207</ID>
+                          <Description>"Pistola"</Description>
+                          <GroupHeader>1</GroupHeader>
+                          <CheatEntries>
+                            <CheatEntry>
+                              <ID>19174</ID>
+                              <Description>"Fácil (mostrado)"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>18</Offset>
+                                <Offset>20</Offset>
+                                <Offset>10</Offset>
+                                <Offset>30</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19175</ID>
+                              <Description>"Fácil"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>18</Offset>
+                                <Offset>18</Offset>
+                                <Offset>20</Offset>
+                                <Offset>10</Offset>
+                                <Offset>30</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19205</ID>
+                              <Description>"Normal (mostrado)"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>18</Offset>
+                                <Offset>28</Offset>
+                                <Offset>10</Offset>
+                                <Offset>30</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19206</ID>
+                              <Description>"Normal"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>18</Offset>
+                                <Offset>18</Offset>
+                                <Offset>28</Offset>
+                                <Offset>10</Offset>
+                                <Offset>30</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19176</ID>
+                              <Description>"Pólvora"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                                <Offset>30</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19177</ID>
+                              <Description>"Recurso"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>28</Offset>
+                                <Offset>18</Offset>
+                                <Offset>30</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                          </CheatEntries>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>19208</ID>
+                          <Description>"Escopeta"</Description>
+                          <GroupHeader>1</GroupHeader>
+                          <CheatEntries>
+                            <CheatEntry>
+                              <ID>19178</ID>
+                              <Description>"Fácil (mostrado)"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>18</Offset>
+                                <Offset>20</Offset>
+                                <Offset>10</Offset>
+                                <Offset>48</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19210</ID>
+                              <Description>"Fácil"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>18</Offset>
+                                <Offset>18</Offset>
+                                <Offset>20</Offset>
+                                <Offset>10</Offset>
+                                <Offset>48</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19209</ID>
+                              <Description>"Normal (mostrado)"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>18</Offset>
+                                <Offset>28</Offset>
+                                <Offset>10</Offset>
+                                <Offset>48</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19179</ID>
+                              <Description>"Normal"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>18</Offset>
+                                <Offset>18</Offset>
+                                <Offset>28</Offset>
+                                <Offset>10</Offset>
+                                <Offset>48</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19180</ID>
+                              <Description>"Pólvora"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                                <Offset>48</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19181</ID>
+                              <Description>"Recurso"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>28</Offset>
+                                <Offset>18</Offset>
+                                <Offset>48</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                          </CheatEntries>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>19211</ID>
+                          <Description>"Subfusil"</Description>
+                          <GroupHeader>1</GroupHeader>
+                          <CheatEntries>
+                            <CheatEntry>
+                              <ID>19182</ID>
+                              <Description>"Fácil (mostrado)"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>18</Offset>
+                                <Offset>20</Offset>
+                                <Offset>10</Offset>
+                                <Offset>60</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19183</ID>
+                              <Description>"Fácil"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>18</Offset>
+                                <Offset>18</Offset>
+                                <Offset>20</Offset>
+                                <Offset>10</Offset>
+                                <Offset>60</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19224</ID>
+                              <Description>"Normal (mostrado)"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>18</Offset>
+                                <Offset>28</Offset>
+                                <Offset>10</Offset>
+                                <Offset>60</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19225</ID>
+                              <Description>"Normal"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>18</Offset>
+                                <Offset>18</Offset>
+                                <Offset>28</Offset>
+                                <Offset>10</Offset>
+                                <Offset>60</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19184</ID>
+                              <Description>"Pólvora"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                                <Offset>60</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19185</ID>
+                              <Description>"Recurso"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>28</Offset>
+                                <Offset>18</Offset>
+                                <Offset>60</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                          </CheatEntries>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>19212</ID>
+                          <Description>"Fusil"</Description>
+                          <GroupHeader>1</GroupHeader>
+                          <CheatEntries>
+                            <CheatEntry>
+                              <ID>19186</ID>
+                              <Description>"Fácil (mostrado)"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>18</Offset>
+                                <Offset>20</Offset>
+                                <Offset>10</Offset>
+                                <Offset>78</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19187</ID>
+                              <Description>"Fácil"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>18</Offset>
+                                <Offset>18</Offset>
+                                <Offset>20</Offset>
+                                <Offset>10</Offset>
+                                <Offset>78</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19222</ID>
+                              <Description>"Normal (mostrado)"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>18</Offset>
+                                <Offset>28</Offset>
+                                <Offset>10</Offset>
+                                <Offset>78</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19223</ID>
+                              <Description>"Normal"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>18</Offset>
+                                <Offset>18</Offset>
+                                <Offset>28</Offset>
+                                <Offset>10</Offset>
+                                <Offset>78</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19188</ID>
+                              <Description>"Pólvora"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                                <Offset>78</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19189</ID>
+                              <Description>"Recurso"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>28</Offset>
+                                <Offset>18</Offset>
+                                <Offset>78</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                          </CheatEntries>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>19213</ID>
+                          <Description>"Magnum"</Description>
+                          <GroupHeader>1</GroupHeader>
+                          <CheatEntries>
+                            <CheatEntry>
+                              <ID>19190</ID>
+                              <Description>"Fácil (mostrado)"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>18</Offset>
+                                <Offset>20</Offset>
+                                <Offset>10</Offset>
+                                <Offset>90</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19191</ID>
+                              <Description>"Fácil"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>18</Offset>
+                                <Offset>18</Offset>
+                                <Offset>20</Offset>
+                                <Offset>10</Offset>
+                                <Offset>90</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19220</ID>
+                              <Description>"Normal (mostrado)"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>18</Offset>
+                                <Offset>28</Offset>
+                                <Offset>10</Offset>
+                                <Offset>90</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19221</ID>
+                              <Description>"Normal"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>18</Offset>
+                                <Offset>18</Offset>
+                                <Offset>28</Offset>
+                                <Offset>10</Offset>
+                                <Offset>90</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19192</ID>
+                              <Description>"Pólvora"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                                <Offset>90</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19193</ID>
+                              <Description>"Recurso"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>28</Offset>
+                                <Offset>18</Offset>
+                                <Offset>60</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                          </CheatEntries>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>19214</ID>
+                          <Description>"Virotes"</Description>
+                          <GroupHeader>1</GroupHeader>
+                          <CheatEntries>
+                            <CheatEntry>
+                              <ID>19194</ID>
+                              <Description>"Fácil (mostrado)"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>18</Offset>
+                                <Offset>20</Offset>
+                                <Offset>10</Offset>
+                                <Offset>A8</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19195</ID>
+                              <Description>"Fácil"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>18</Offset>
+                                <Offset>18</Offset>
+                                <Offset>20</Offset>
+                                <Offset>10</Offset>
+                                <Offset>A8</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19218</ID>
+                              <Description>"Normal (mostrado)"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>18</Offset>
+                                <Offset>28</Offset>
+                                <Offset>10</Offset>
+                                <Offset>A8</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19219</ID>
+                              <Description>"Normal"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>18</Offset>
+                                <Offset>18</Offset>
+                                <Offset>28</Offset>
+                                <Offset>10</Offset>
+                                <Offset>A8</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19196</ID>
+                              <Description>"Principal"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                                <Offset>A8</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19197</ID>
+                              <Description>"Recurso"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>28</Offset>
+                                <Offset>18</Offset>
+                                <Offset>A8</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19198</ID>
+                              <Description>"Virotes x3 principal"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                                <Offset>C0</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19199</ID>
+                              <Description>"Virotes x3 principal"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                                <Offset>C0</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19200</ID>
+                              <Description>"Virotes x3 recurso"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>28</Offset>
+                                <Offset>18</Offset>
+                                <Offset>C0</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                          </CheatEntries>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>19226</ID>
+                          <Description>"Granada pesada"</Description>
+                          <GroupHeader>1</GroupHeader>
+                          <CheatEntries>
+                            <CheatEntry>
+                              <ID>19227</ID>
+                              <Description>"Fácil (mostrado)"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>18</Offset>
+                                <Offset>20</Offset>
+                                <Offset>10</Offset>
+                                <Offset>F0</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19228</ID>
+                              <Description>"Fácil"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>18</Offset>
+                                <Offset>18</Offset>
+                                <Offset>20</Offset>
+                                <Offset>10</Offset>
+                                <Offset>F0</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19229</ID>
+                              <Description>"Normal (mostrado)"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>18</Offset>
+                                <Offset>28</Offset>
+                                <Offset>10</Offset>
+                                <Offset>F0</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19230</ID>
+                              <Description>"Normal"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>18</Offset>
+                                <Offset>18</Offset>
+                                <Offset>28</Offset>
+                                <Offset>10</Offset>
+                                <Offset>F0</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19231</ID>
+                              <Description>"Pólvora"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                                <Offset>F0</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19232</ID>
+                              <Description>"Recurso"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>28</Offset>
+                                <Offset>18</Offset>
+                                <Offset>F0</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                          </CheatEntries>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>19215</ID>
+                          <Description>"Granada cegadora"</Description>
+                          <GroupHeader>1</GroupHeader>
+                          <CheatEntries>
+                            <CheatEntry>
+                              <ID>19201</ID>
+                              <Description>"Fácil (mostrado)"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>18</Offset>
+                                <Offset>20</Offset>
+                                <Offset>10</Offset>
+                                <Offset>108</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19202</ID>
+                              <Description>"Fácil"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>18</Offset>
+                                <Offset>18</Offset>
+                                <Offset>20</Offset>
+                                <Offset>10</Offset>
+                                <Offset>108</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19216</ID>
+                              <Description>"Normal (mostrado)"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>18</Offset>
+                                <Offset>28</Offset>
+                                <Offset>10</Offset>
+                                <Offset>108</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19217</ID>
+                              <Description>"Normal"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>18</Offset>
+                                <Offset>18</Offset>
+                                <Offset>28</Offset>
+                                <Offset>10</Offset>
+                                <Offset>108</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19203</ID>
+                              <Description>"Pólvora"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                                <Offset>108</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>19204</ID>
+                              <Description>"Recurso"</Description>
+                              <ShowAsSigned>0</ShowAsSigned>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>RE4_Craft</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>28</Offset>
+                                <Offset>18</Offset>
+                                <Offset>108</Offset>
+                                <Offset>48</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                          </CheatEntries>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>19081</ID>
+              <Description>"Vida"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>RE4_Player</Address>
+              <Offsets>
+                <Offset>14</Offset>
+                <Offset>148</Offset>
+                <Offset>30</Offset>
+                <Offset>18</Offset>
+                <Offset>78</Offset>
+              </Offsets>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>19027</ID>
+                  <Description>"Máximo"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>RE4_Player</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                    <Offset>148</Offset>
+                    <Offset>30</Offset>
+                    <Offset>18</Offset>
+                    <Offset>78</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>19056</ID>
+              <Description>"??"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Byte</VariableType>
+              <Address>RE4_Player</Address>
+              <Offsets>
+                <Offset>1C</Offset>
+                <Offset>148</Offset>
+                <Offset>30</Offset>
+                <Offset>18</Offset>
+                <Offset>78</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>47</ID>
+              <Description>"Pesetas"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>RE4_Money</Address>
+              <Offsets>
+                <Offset>10</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>19082</ID>
+              <Description>"Espinela"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>RE4_Spinel</Address>
+              <Offsets>
+                <Offset>20</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>19166</ID>
+              <Description>"Estadísticas"</Description>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>19168</ID>
+                  <Description>"Impactos"</Description>
+                  <ShowAsSigned>1</ShowAsSigned>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>"re4.exe"+0D23D260</Address>
+                  <Offsets>
+                    <Offset>D4</Offset>
+                    <Offset>30</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>19042</ID>
+          <Description>"[SCRIPTS]"</Description>
+          <Options moHideChildren="1"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>19159</ID>
+              <Description>"Obtener arma actual"</Description>
+              <Options moHideChildren="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+
+aobscanmodule(getWeapon,re4.exe,48 8B 5A 10 48 85 DB 74 1F 48 8B 0B 48 8B 15 ?? ?? ?? ?? 48 8B 09 E8 ?? ?? ?? ?? 84 C0 74 09 8B 43 44) // should be unique
+alloc(newmem,$64,getWeapon)
+
+label(code)
+label(return)
+
+label(gWeapon)
+registersymbol(gWeapon)
+
+newmem:
+
+code:
+  mov [gWeapon],rdx
+  mov rbx,[rdx+10]
+  test rbx,rbx
+  jmp return
+
+gWeapon:
+  dq 0
+
+getWeapon:
+  jmp newmem
+  nop 2
+return:
+registersymbol(getWeapon)
+
+[DISABLE]
+
+getWeapon:
+  db 48 8B 5A 10 48 85 DB
+
+unregistersymbol(getWeapon)
+dealloc(newmem)
+unregistersymbol(gWeapon)
+
+{
+// ORIGINAL CODE - INJECTION POINT: re4.exe+ED0C6
+
+re4.exe+ED0B8: CC                    - int 3 
+re4.exe+ED0B9: CC                    - int 3 
+re4.exe+ED0BA: CC                    - int 3 
+re4.exe+ED0BB: CC                    - int 3 
+re4.exe+ED0BC: CC                    - int 3 
+re4.exe+ED0BD: CC                    - int 3 
+re4.exe+ED0BE: CC                    - int 3 
+re4.exe+ED0BF: CC                    - int 3 
+re4.exe+ED0C0: 40 53                 - push rbx
+re4.exe+ED0C2: 48 83 EC 20           - sub rsp,20
+// ---------- INJECTING HERE ----------
+re4.exe+ED0C6: 48 8B 5A 10           - mov rbx,[rdx+10]
+// ---------- DONE INJECTING  ----------
+re4.exe+ED0CA: 48 85 DB              - test rbx,rbx
+re4.exe+ED0CD: 74 1F                 - je re4.exe+ED0EE
+re4.exe+ED0CF: 48 8B 0B              - mov rcx,[rbx]
+re4.exe+ED0D2: 48 8B 15 9F 7C 00 0D  - mov rdx,[re4.exe+D0F4D78]
+re4.exe+ED0D9: 48 8B 09              - mov rcx,[rcx]
+re4.exe+ED0DC: E8 1F 8D 4A 03        - call re4.exe+3595E00
+re4.exe+ED0E1: 84 C0                 - test al,al
+re4.exe+ED0E3: 74 09                 - je re4.exe+ED0EE
+re4.exe+ED0E5: 8B 43 44              - mov eax,[rbx+44]
+re4.exe+ED0E8: 48 83 C4 20           - add rsp,20
+}
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>19158</ID>
+                  <Description>"Casillas"</Description>
+                  <DropDownListLink>listSlotsUsed</DropDownListLink>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>gWeapon</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                    <Offset>10</Offset>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>19271</ID>
+                  <Description>"Capacidad"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>gWeapon</Address>
+                  <Offsets>
+                    <Offset>14</Offset>
+                    <Offset>10</Offset>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>19269</ID>
+                  <Description>"??"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>gWeapon</Address>
+                  <Offsets>
+                    <Offset>8</Offset>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>19163</ID>
+                  <Description>"ID"</Description>
+                  <DropDownListLink>listItemID</DropDownListLink>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>gWeapon</Address>
+                  <Offsets>
+                    <Offset>28</Offset>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>19270</ID>
+                  <Description>"Estado"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>gWeapon</Address>
+                  <Offsets>
+                    <Offset>30</Offset>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>19162</ID>
+                  <Description>"Tipo de munición"</Description>
+                  <DropDownListLink>listItemID</DropDownListLink>
+                  <ShowAsSigned>1</ShowAsSigned>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>gWeapon</Address>
+                  <Offsets>
+                    <Offset>40</Offset>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>19161</ID>
+                  <Description>"Cargador"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>gWeapon</Address>
+                  <Offsets>
+                    <Offset>44</Offset>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>19160</ID>
+                  <Description>"Recámara"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>gWeapon</Address>
+                  <Offsets>
+                    <Offset>48</Offset>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>19256</ID>
+                  <Description>"Características del arma"</Description>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>19257</ID>
+                      <Description>"Potencia"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>gWeapon</Address>
+                      <Offsets>
+                        <Offset>1F0</Offset>
+                        <Offset>58</Offset>
+                        <Offset>10</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19258</ID>
+                      <Description>"Capacidad"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>gWeapon</Address>
+                      <Offsets>
+                        <Offset>250</Offset>
+                        <Offset>58</Offset>
+                        <Offset>10</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19259</ID>
+                      <Description>"Recarga"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>gWeapon</Address>
+                      <Offsets>
+                        <Offset>2B0</Offset>
+                        <Offset>58</Offset>
+                        <Offset>10</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19260</ID>
+                      <Description>"Cadencia de fuego"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>gWeapon</Address>
+                      <Offsets>
+                        <Offset>300</Offset>
+                        <Offset>58</Offset>
+                        <Offset>10</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>19097</ID>
+              <Description>"Obtener selector del inventario"</Description>
+              <Options moHideChildren="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : re4.exe
+  Version: 
+  Date   : 2023-03-28
+  Author : Marcus101RR
+
+  Get Inventory
+}
+
+[ENABLE]
+
+aobscanmodule(getInventory,re4.exe,48 8B 92 A0 00 00 00 45 33 C9 E9) // should be unique
+alloc(newmem,$64,getInventory)
+
+label(code)
+label(return)
+
+label(gInventory)
+registersymbol(gInventory)
+
+newmem:
+
+code:
+  mov [gInventory],rdx
+  mov rdx,[rdx+000000A0]
+  jmp return
+
+gInventory:
+  dq 0
+
+getInventory:
+  jmp newmem
+  nop 2
+return:
+registersymbol(getInventory)
+
+[DISABLE]
+
+getInventory:
+  db 48 8B 92 A0 00 00 00
+
+unregistersymbol(getInventory)
+dealloc(newmem)
+unregistersymbol(gInventory)
+{
+// ORIGINAL CODE - INJECTION POINT: re4.exe+A33810
+
+re4.exe+A337FB: 48 8B 5C 24 30        - mov rbx,[rsp+30]
+re4.exe+A33800: 48 83 C4 20           - add rsp,20
+re4.exe+A33804: 5F                    - pop rdi
+re4.exe+A33805: E9 D6 0D 7B 02        - jmp re4.exe+31E45E0
+re4.exe+A3380A: CC                    - int 3 
+re4.exe+A3380B: CC                    - int 3 
+re4.exe+A3380C: CC                    - int 3 
+re4.exe+A3380D: CC                    - int 3 
+re4.exe+A3380E: CC                    - int 3 
+re4.exe+A3380F: CC                    - int 3 
+// ---------- INJECTING HERE ----------
+re4.exe+A33810: 48 8B 92 A0 00 00 00  - mov rdx,[rdx+000000A0]
+// ---------- DONE INJECTING  ----------
+re4.exe+A33817: 45 33 C9              - xor r9d,r9d
+re4.exe+A3381A: E9 D1 99 E8 00        - jmp re4.exe+18BD1F0
+re4.exe+A3381F: CC                    - int 3 
+re4.exe+A33820: 49 8B 00              - mov rax,[r8]
+re4.exe+A33823: 48 89 82 70 04 00 00  - mov [rdx+00000470],rax
+re4.exe+A3382A: C3                    - ret 
+re4.exe+A3382B: CC                    - int 3 
+re4.exe+A3382C: CC                    - int 3 
+re4.exe+A3382D: CC                    - int 3 
+re4.exe+A3382E: CC                    - int 3 
+}
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>19099</ID>
+                  <Description>"Empieza en 20 (último offset 2)"</Description>
+                  <GroupHeader>1</GroupHeader>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>19103</ID>
+                  <Description>"Casilla seleccionada"</Description>
+                  <DropDownListLink>listItemID</DropDownListLink>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>gInventory</Address>
+                  <Offsets>
+                    <Offset>10</Offset>
+                    <Offset>20</Offset>
+                    <Offset>10</Offset>
+                    <Offset>38</Offset>
+                    <Offset>A0</Offset>
+                  </Offsets>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>19104</ID>
+                      <Description>"Capacidad máxima"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>10</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19267</ID>
+                      <Description>"Estado base"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>38</Offset>
+                        <Offset>10</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19100</ID>
+                      <Description>"ID"</Description>
+                      <DropDownListLink>listItemID</DropDownListLink>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>28</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19234</ID>
+                      <Description>"Estado"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19233</ID>
+                      <Description>"Cantidad"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>34</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19098</ID>
+                      <Description>"Tipo de munición"</Description>
+                      <DropDownListLink>listItemID</DropDownListLink>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>40</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19235</ID>
+                      <Description>"Cargador"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>44</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19236</ID>
+                      <Description>"Recámara"</Description>
+                      <ShowAsSigned>1</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>+0</Address>
+                      <Offsets>
+                        <Offset>48</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>19238</ID>
+                      <Description>"Características del arma"</Description>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>19237</ID>
+                          <Description>"Potencia"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>+0</Address>
+                          <Offsets>
+                            <Offset>1F0</Offset>
+                            <Offset>58</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>19239</ID>
+                          <Description>"Capacidad"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>+0</Address>
+                          <Offsets>
+                            <Offset>250</Offset>
+                            <Offset>58</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>19241</ID>
+                          <Description>"Recarga"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>+0</Address>
+                          <Offsets>
+                            <Offset>2B0</Offset>
+                            <Offset>58</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>19240</ID>
+                          <Description>"Cadencia de fuego"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>+0</Address>
+                          <Offsets>
+                            <Offset>300</Offset>
+                            <Offset>58</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>19041</ID>
+              <Description>"Obtener tesoros"</Description>
+              <Options moHideChildren="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : re4.exe
+  Version: 
+  Date   : 2023-03-26
+  Author : Marcus101RR
+
+  Get Item
+}
+
+[ENABLE]
+
+aobscanmodule(getItem,re4.exe,48 8B 74 C8 20 EB 20 48 8B 15 ?? ?? ?? ?? 45 33 C0 48 8B CF E8 ?? ?? ?? ?? 48 8B D0 48 8B CF E8 ?? ?? ?? ?? 48 8B F5 48 8B 15) // should be unique
+alloc(newmem,$64,getItem)
+
+label(code)
+label(return)
+
+label(gItem)
+registersymbol(gItem)
+
+newmem:
+
+code:
+  mov rsi,[rax+rcx*8+20]
+  mov [gItem],rsi
+  jmp return
+
+gItem:
+  dq 0
+
+getItem:
+  jmp newmem
+return:
+registersymbol(getItem)
+
+[DISABLE]
+
+getItem:
+  db 48 8B 74 C8 20
+
+unregistersymbol(getItem)
+dealloc(newmem)
+unregistersymbol(gItem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: re4.exe+1420C0F
+
+re4.exe+1420BF9: 41 5C                 - pop r12
+re4.exe+1420BFB: 5F                    - pop rdi
+re4.exe+1420BFC: 5E                    - pop rsi
+re4.exe+1420BFD: 5D                    - pop rbp
+re4.exe+1420BFE: C3                    - ret 
+re4.exe+1420BFF: 49 8B 45 28           - mov rax,[r13+28]
+re4.exe+1420C03: 3B 58 18              - cmp ebx,[rax+18]
+re4.exe+1420C06: 73 0E                 - jae re4.exe+1420C16
+re4.exe+1420C08: 48 8B 40 10           - mov rax,[rax+10]
+re4.exe+1420C0C: 48 63 CB              - movsxd  rcx,ebx
+// ---------- INJECTING HERE ----------
+re4.exe+1420C0F: 48 8B 74 C8 20        - mov rsi,[rax+rcx*8+20]
+// ---------- DONE INJECTING  ----------
+re4.exe+1420C14: EB 20                 - jmp re4.exe+1420C36
+re4.exe+1420C16: 48 8B 15 83 7C CB 0B  - mov rdx,[re4.exe+D0D88A0]
+re4.exe+1420C1D: 45 33 C0              - xor r8d,r8d
+re4.exe+1420C20: 48 8B CF              - mov rcx,rdi
+re4.exe+1420C23: E8 78 DE 16 02        - call re4.exe+358EAA0
+re4.exe+1420C28: 48 8B D0              - mov rdx,rax
+re4.exe+1420C2B: 48 8B CF              - mov rcx,rdi
+re4.exe+1420C2E: E8 3D 90 17 02        - call re4.exe+3599C70
+re4.exe+1420C33: 48 8B F5              - mov rsi,rbp
+re4.exe+1420C36: 48 8B 15 AB F0 CD 0B  - mov rdx,[re4.exe+D0FFCE8]
+}
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>19043</ID>
+                  <Description>"Cantidad"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>gItem</Address>
+                  <Offsets>
+                    <Offset>34</Offset>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>19265</ID>
+              <Description>"Obtener objetos clave"</Description>
+              <Options moHideChildren="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+
+aobscanmodule(getKeyItems,re4.exe,48 63 CF 48 8B 74 C8 20 EB 20) // should be unique
+alloc(newmem,$64,getKeyItems)
+
+label(code)
+label(return)
+
+label(gKeyItems)
+registersymbol(gKeyItems)
+
+newmem:
+
+code:
+  movsxd  rcx,edi
+  mov rsi,[rax+rcx*8+20]
+  mov [gKeyItems],rsi
+  jmp return
+
+gKeyItems:
+  dq 0
+
+getKeyItems:
+  jmp newmem
+  nop 3
+return:
+registersymbol(getKeyItems)
+
+[DISABLE]
+
+getKeyItems:
+  db 48 63 CF 48 8B 74 C8 20
+
+unregistersymbol(getKeyItems)
+dealloc(newmem)
+unregistersymbol(gKeyItems)
+
+{
+// ORIGINAL CODE - INJECTION POINT: re4.exe+142DC53
+
+re4.exe+142DC38: 48 81 C4 88 00 00 00  - add rsp,00000088
+re4.exe+142DC3F: 41 5E                 - pop r14
+re4.exe+142DC41: 41 5D                 - pop r13
+re4.exe+142DC43: 5B                    - pop rbx
+re4.exe+142DC44: 5D                    - pop rbp
+re4.exe+142DC45: C3                    - ret 
+re4.exe+142DC46: 49 8B 45 20           - mov rax,[r13+20]
+re4.exe+142DC4A: 3B 78 18              - cmp edi,[rax+18]
+re4.exe+142DC4D: 73 0E                 - jae re4.exe+142DC5D
+re4.exe+142DC4F: 48 8B 40 10           - mov rax,[rax+10]
+// ---------- INJECTING HERE ----------
+re4.exe+142DC53: 48 63 CF              - movsxd  rcx,edi
+// ---------- DONE INJECTING  ----------
+re4.exe+142DC56: 48 8B 74 C8 20        - mov rsi,[rax+rcx*8+20]
+re4.exe+142DC5B: EB 20                 - jmp re4.exe+142DC7D
+re4.exe+142DC5D: 48 8B 15 BC 20 CB 0B  - mov rdx,[re4.exe+D0DFD20]
+re4.exe+142DC64: 45 33 C0              - xor r8d,r8d
+re4.exe+142DC67: 48 8B CB              - mov rcx,rbx
+re4.exe+142DC6A: E8 11 C5 16 02        - call re4.exe+359A180
+re4.exe+142DC6F: 48 8B D0              - mov rdx,rax
+re4.exe+142DC72: 48 8B CB              - mov rcx,rbx
+re4.exe+142DC75: E8 D6 76 17 02        - call re4.exe+35A5350
+re4.exe+142DC7A: 49 8B F6              - mov rsi,r14
+}
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>19266</ID>
+                  <Description>"Cantidad"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>gKeyItems</Address>
+                  <Offsets>
+                    <Offset>34</Offset>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>19045</ID>
+              <Description>"Obtener capacidad máxima"</Description>
+              <Options moHideChildren="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : re4.exe
+  Version: 
+  Date   : 2023-03-27
+  Author : Administrator
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(getMaxAmmo,re4.exe,48 8B 42 10 48 85 C0 74 0A 8B 40 14) // should be unique
+alloc(newmem,$64,getMaxAmmo)
+
+label(code)
+label(return)
+
+label(gMaxAmmo)
+registersymbol(gMaxAmmo)
+
+newmem:
+
+code:
+  mov [gMaxAmmo],rdx
+  mov rax,[rdx+10]
+  test rax,rax
+  jmp return
+
+gMaxAmmo:
+  dq 0
+
+getMaxAmmo:
+  jmp newmem
+  nop 2
+return:
+registersymbol(getMaxAmmo)
+
+[DISABLE]
+
+getMaxAmmo:
+  db 48 8B 42 10 48 85 C0
+
+unregistersymbol(getMaxAmmo)
+dealloc(newmem)
+unregistersymbol(gMaxAmmo)
+{
+// ORIGINAL CODE - INJECTION POINT: re4.exe+15F0C70
+
+re4.exe+15F0C58: 84 DB           - test bl,bl
+re4.exe+15F0C5A: 48 8B 5C 24 58  - mov rbx,[rsp+58]
+re4.exe+15F0C5F: 0F 95 C0        - setne al
+re4.exe+15F0C62: 48 83 C4 20     - add rsp,20
+re4.exe+15F0C66: 41 5F           - pop r15
+re4.exe+15F0C68: 41 5E           - pop r14
+re4.exe+15F0C6A: 41 5D           - pop r13
+re4.exe+15F0C6C: 41 5C           - pop r12
+re4.exe+15F0C6E: 5F              - pop rdi
+re4.exe+15F0C6F: C3              - ret 
+// ---------- INJECTING HERE ----------
+re4.exe+15F0C70: 48 8B 42 10     - mov rax,[rdx+10]
+// ---------- DONE INJECTING  ----------
+re4.exe+15F0C74: 48 85 C0        - test rax,rax
+re4.exe+15F0C77: 74 0A           - je re4.exe+15F0C83
+re4.exe+15F0C79: 8B 40 14        - mov eax,[rax+14]
+re4.exe+15F0C7C: 44 3B C0        - cmp r8d,eax
+re4.exe+15F0C7F: 44 0F 4F C0     - cmovg r8d,eax
+re4.exe+15F0C83: 33 C0           - xor eax,eax
+re4.exe+15F0C85: 45 85 C0        - test r8d,r8d
+re4.exe+15F0C88: 44 0F 48 C0     - cmovs r8d,eax
+re4.exe+15F0C8C: 44 89 42 34     - mov [rdx+34],r8d
+re4.exe+15F0C90: C3              - ret 
+}
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>19046</ID>
+                  <Description>"Sin descripción"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>gMaxAmmo</Address>
+                  <Offsets>
+                    <Offset>14</Offset>
+                    <Offset>10</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>19085</ID>
+              <Description>"Obtener armadura"</Description>
+              <Options moHideChildren="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : re4.exe
+  Version: 
+  Date   : 2023-03-28
+  Author : Administrator
+
+  Armor
+
+}
+
+[ENABLE]
+
+aobscanmodule(getArmor,re4.exe,48 8B 54 C8 20 EB 20 48 8B 15 * * * * 45 33 C0 48 8B CE E8 48) // should be unique
+alloc(newmem,$64,getArmor)
+
+label(code)
+label(return)
+
+label(gArmor)
+registersymbol(gArmor)
+
+newmem:
+
+code:
+  mov [gArmor],rax
+  mov rdx,[rax+rcx*8+20]
+  jmp return
+
+gArmor:
+  dq 0
+
+getArmor:
+  jmp newmem
+return:
+registersymbol(getArmor)
+
+[DISABLE]
+
+getArmor:
+  db 48 8B 54 C8 20
+
+unregistersymbol(getArmor)
+dealloc(newmem)
+unregistersymbol(gArmor)
+
+{
+// ORIGINAL CODE - INJECTION POINT: re4.exe+10A3B0F
+
+re4.exe+10A3AF5: 48 83 C4 40           - add rsp,40
+re4.exe+10A3AF9: 41 5E                 - pop r14
+re4.exe+10A3AFB: 41 5C                 - pop r12
+re4.exe+10A3AFD: 5E                    - pop rsi
+re4.exe+10A3AFE: C3                    - ret 
+re4.exe+10A3AFF: 49 8B 46 20           - mov rax,[r14+20]
+re4.exe+10A3B03: 3B 58 18              - cmp ebx,[rax+18]
+re4.exe+10A3B06: 73 0E                 - jae re4.exe+10A3B16
+re4.exe+10A3B08: 48 8B 40 10           - mov rax,[rax+10]
+re4.exe+10A3B0C: 48 63 CB              - movsxd  rcx,ebx
+// ---------- INJECTING HERE ----------
+re4.exe+10A3B0F: 48 8B 54 C8 20        - mov rdx,[rax+rcx*8+20]
+// ---------- DONE INJECTING  ----------
+re4.exe+10A3B14: EB 20                 - jmp re4.exe+10A3B36
+re4.exe+10A3B16: 48 8B 15 83 4D 03 0C  - mov rdx,[re4.exe+D0D88A0]
+re4.exe+10A3B1D: 45 33 C0              - xor r8d,r8d
+re4.exe+10A3B20: 48 8B CE              - mov rcx,rsi
+re4.exe+10A3B23: E8 78 AF 4E 02        - call re4.exe+358EAA0
+re4.exe+10A3B28: 48 8B D0              - mov rdx,rax
+re4.exe+10A3B2B: 48 8B CE              - mov rcx,rsi
+re4.exe+10A3B2E: E8 3D 61 4F 02        - call re4.exe+3599C70
+re4.exe+10A3B33: 49 8B D7              - mov rdx,r15
+re4.exe+10A3B36: 48 8B 52 10           - mov rdx,[rdx+10]
+}
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>19086</ID>
+                  <Description>"Armadura"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>gArmor</Address>
+                  <Offsets>
+                    <Offset>30</Offset>
+                    <Offset>10</Offset>
+                    <Offset>188</Offset>
+                  </Offsets>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>19087</ID>
+                      <Description>"Máximo"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>gArmor</Address>
+                      <Offsets>
+                        <Offset>18</Offset>
+                        <Offset>10</Offset>
+                        <Offset>10</Offset>
+                        <Offset>188</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>37</ID>
+          <Description>"[DEPURACIÓN]"</Description>
+          <Options moHideChildren="1"/>
+          <Color>0000FF</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>36</ID>
+              <Description>"Buscar direcciones base"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{$lua}
+if syntaxcheck then return end
+[ENABLE]
+  print(string.format("Buscando direcciones base..."))
+
+  local aobList = {
+  "48 8B 15 ?? ?? ?? ?? 44 8B C7 48 8B CD ?? ?? ?? ?? 00 48 8B 15 ?? ?? ?? ?? 44 8B C7 48 8B CD 8B D8",
+  "48 8B 15 ?? ?? ?? ?? 48 8B CB E8 ?? ?? ?? ?? 45 33 C0 48 8B D7 48 8B CB 48 8B F0",
+  "48 8B 05 ?? ?? ?? ?? 48 8B DA 48 8B F1 48 8B 50 10 48 8B 52 10 E8 ?? ?? ?? ?? 48 8B 7C 24 38",
+  "48 8B 15 ?? ?? ?? ?? E8 ?? ?? ?? ?? 44 8B 43 08 48 8B F8 45 85 C0",
+  "48 8B 15 ?? ?? ?? ?? E8 ?? ?? ?? ?? 44 8B 43 08 48 8B F8 45 85 C0 79 06 48 89 43 18 EB ?? 48 3B 7B 18",
+  "48 8B 15 ?? ?? ?? ?? E8 ?? ?? ?? ?? 8B D7 BE FF FF FF FF 85 FF"
+  }
+  local aobNames = {
+  "RE4_Money",
+  "RE4_Player",
+  "RE4_Capacity",
+  "RE4_Craft",
+  "RE4_Craft",
+  "RE4_Spinel"
+  }
+  local xbase = readInteger(process)and GetAddress(process)
+  print(string.format("Base: %X",xbase))
+  for i = 1, #aobList do
+        local aob = AOBScan(aobList[i],"+X*C*W")
+        local instruct = getAddressSafe(aob[0])
+        local distance = getAddressSafe(instruct)+3
+        distance = readInteger(distance)
+
+        local instructSize = getInstructionSize(instruct)
+
+        local address = (instruct + distance + instructSize) - xbase
+        print(string.format("%s: %s+%X",aobNames[i],process,address))
+  end
+[DISABLE]
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>19054</ID>
+              <Description>"¿Obtener límites de casillas?"</Description>
+              <Options moHideChildren="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : re4.exe
+  Version: 
+  Date   : 2023-03-27
+  Author : Administrator
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(getCaps,re4.exe,49 8B 46 38 3B 58 18 73 0A 48 8B 40 10 48 8B 14 06 EB 1F) // should be unique
+alloc(newmem,$64,getCaps)
+
+label(code)
+label(return)
+
+label(gCaps)
+registersymbol(gCaps)
+
+newmem:
+
+code:
+  mov [gCaps],r14
+  mov rax,[r14+38]
+  cmp ebx,[rax+18]
+  jmp return
+
+gCaps:
+  dq 0
+
+getCaps:
+  jmp newmem
+  nop 2
+return:
+registersymbol(getCaps)
+
+[DISABLE]
+
+getCaps:
+  db 49 8B 46 38 3B 58 18
+
+unregistersymbol(getCaps)
+dealloc(newmem)
+unregistersymbol(gCaps)
+
+{
+// ORIGINAL CODE - INJECTION POINT: re4.exe+18BD250
+
+re4.exe+18BD228: 41 0F B6 F9           - movzx edi,r9b
+re4.exe+18BD22C: 48 8B E9              - mov rbp,rcx
+re4.exe+18BD22F: E8 AC ED D7 01        - call re4.exe+363BFE0
+re4.exe+18BD234: 49 8B 46 38           - mov rax,[r14+38]
+re4.exe+18BD238: 33 DB                 - xor ebx,ebx
+re4.exe+18BD23A: 4C 63 60 18           - movsxd  r12,dword ptr [rax+18]
+re4.exe+18BD23E: 4D 85 E4              - test r12,r12
+re4.exe+18BD241: 0F 8E 8C 01 00 00     - jng re4.exe+18BD3D3
+re4.exe+18BD247: 8D 73 20              - lea esi,[rbx+20]
+re4.exe+18BD24A: 66 0F 1F 44 00 00     - nop word ptr [rax+rax+00]
+// ---------- INJECTING HERE ----------
+re4.exe+18BD250: 49 8B 46 38           - mov rax,[r14+38]
+// ---------- DONE INJECTING  ----------
+re4.exe+18BD254: 3B 58 18              - cmp ebx,[rax+18]
+re4.exe+18BD257: 73 0A                 - jae re4.exe+18BD263
+re4.exe+18BD259: 48 8B 40 10           - mov rax,[rax+10]
+re4.exe+18BD25D: 48 8B 14 06           - mov rdx,[rsi+rax]
+re4.exe+18BD261: EB 1F                 - jmp re4.exe+18BD282
+re4.exe+18BD263: 48 8B 15 36 B6 81 0B  - mov rdx,[re4.exe+D0D88A0]
+re4.exe+18BD26A: 45 33 C0              - xor r8d,r8d
+re4.exe+18BD26D: 48 8B CD              - mov rcx,rbp
+re4.exe+18BD270: E8 2B 18 CD 01        - call re4.exe+358EAA0
+re4.exe+18BD275: 48 8B D0              - mov rdx,rax
+}
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>19055</ID>
+                  <Description>"Valor"</Description>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>gCaps</Address>
+                  <Offsets>
+                    <Offset>14</Offset>
+                    <Offset>10</Offset>
+                    <Offset>10</Offset>
+                    <Offset>58</Offset>
+                    <Offset>10</Offset>
+                    <Offset>38</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>19109</ID>
+              <Description>"Límites (AOB)"</Description>
+              <Options moHideChildren="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{$lua}
+if syntaxcheck then return end
+
+[ENABLE]
+
+local itemBase = GetAddressSafe("[[RE4_Capacity]+50]+48")
+if itemBase then
+  local item = readSmallInteger(readPointer(readPointer(itemBase)+0x48)+0x18)
+  print("Cambiando capacidad...")
+  print("Encontrado ", item)
+  writeSmallInteger(readPointer(readPointer(readPointer(itemBase)+0x48)+0x18)+0x14, 100)
+  writeSmallInteger(readPointer(readPointer(readPointer(itemBase)+0x60)+0x18)+0x14, 50)
+  writeSmallInteger(readPointer(readPointer(readPointer(itemBase)+0x78)+0x18)+0x14, 60)
+  writeSmallInteger(readPointer(readPointer(readPointer(itemBase)+0x90)+0x18)+0x14, 40)
+  writeSmallInteger(readPointer(readPointer(readPointer(itemBase)+0xA8)+0x18)+0x14, 200)
+  writeSmallInteger(readPointer(readPointer(readPointer(itemBase)+0xC0)+0x18)+0x14, 40)
+  writeSmallInteger(readPointer(readPointer(readPointer(itemBase)+0x258)+0x18)+0x14, 3)
+  writeSmallInteger(readPointer(readPointer(readPointer(itemBase)+0x390)+0x18)+0x14, 50)
+  writeSmallInteger(readPointer(readPointer(readPointer(itemBase)+0x3A8)+0x18)+0x14, 10)
+  writeSmallInteger(readPointer(readPointer(readPointer(itemBase)+0x3F0)+0x18)+0x14, 10)
+  writeSmallInteger(readPointer(readPointer(readPointer(itemBase)+0x1638)+0x18)+0x14, 3)
+  writeSmallInteger(readPointer(readPointer(readPointer(itemBase)+0x1650)+0x18)+0x14, 3)
+  writeSmallInteger(readPointer(readPointer(readPointer(itemBase)+0x1668)+0x18)+0x14, 3)
+  print("Completado")
+end
+
+[DISABLE]
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>19101</ID>
+              <Description>"DEFINICIONES"</Description>
+              <Options moHideChildren="1"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>19102</ID>
+                  <Description>"listItemID"</Description>
+                  <DropDownList DescriptionOnly="1" DisplayValueAsItem="1">112800000:Munición de pistola
+112801600:Munición de magnum
+112803200:Munición de escopeta
+112804800:Munición de fusil
+112806400:Munición de subfusil
+112808000:Virotes
+114400000:Hierba verde
+114404800:Hierba mezclada (V+V)
+114408000:Hierba mezclada (V+R)
+114416000:Spray de primeros auxilios
+114417600:Lubina negra
+114422400:Víbora
+116000000:Mira telescópica
+116008000:Mira láser
+117600000:Pólvora
+117601600:Recursos (G)
+117603200:Minas adhesivas
+117606400:Recursos (P)
+274835456:SG-09 R
+274995456:W-870
+274997056:Escopeta antidisturbios
+275477056:Stingray
+275637056:Killer7
+275795456:Lanzavirotes
+276435456:Cuchillo de combate
+276437056:Cuchillo de lucha
+277075456:Granada
+277077056:Granada pesada
+277078656:Granada cegadora
+277080256:Huevo de gallina
+277081856:Huevo de gallina marrón
+277083456:Huevo de gallina dorado
+</DropDownList>
+                  <GroupHeader>1</GroupHeader>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>19155</ID>
+                  <Description>"listPerkID"</Description>
+                  <DropDownList DescriptionOnly="1" DisplayValueAsItem="1">127200000:15% más munición de pistola
+127211200:20% más munición de magnum
+127217600:20% más virotes
+127244800:8% más velocidad al correr
+127246400:-1 de pólvora usada
+</DropDownList>
+                  <GroupHeader>1</GroupHeader>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>19272</ID>
+                  <Description>"listSlotsUsed"</Description>
+                  <DropDownList DescriptionOnly="1" DisplayValueAsItem="1">6:1x2
+</DropDownList>
+                  <GroupHeader>1</GroupHeader>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <Comments>1.6
+- Actualizada para el Hotfix #1 (10/2/2023)
+- Actualizada para Separate Ways (22/9/2023)
+- Actualizada para el Hotfix #1 (23/4/2023)
+- Actualizada para el lanzamiento de Mercenarios (7/4/2023)
+- Selector de inventario actualizado
+- Añadidos IDs de objetos, datos de fabricación y capacidad
+- Versión inicial
+</Comments>
+</CheatTable>
