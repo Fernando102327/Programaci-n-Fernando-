@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>9</ID>
+      <Description>"Puntos de engrama ilimitados"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+
+aobscanmodule(endgram,ShooterGame.exe,8B 80 94 0C 00 00 89 44 24 28)
+alloc(newmem,$1000,endgram)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+
+mov [rax+00000C94],64
+mov eax,[rax+00000C94]
+jmp return
+
+endgram:
+jmp code
+nop
+return:
+registersymbol(endgram)
+
+[DISABLE]
+
+endgram:
+db 8B 80 94 0C 00 00
+
+unregistersymbol(endgram)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>10</ID>
+      <Description>"Durabilidad ilimitada"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+
+
+aobscanmodule(durability_aob,ShooterGame.exe,F3 0F 10 80 7c 05 00 00 F3 0F 5E 44) // debería ser único
+alloc(newmem,$1000,durability_aob)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+
+mov [rax+0000057c],(float)1000
+  movss xmm0,[rax+0000057c]
+  jmp return
+
+durability_aob:
+  jmp newmem
+  nop 3
+return:
+registersymbol(durability_aob)
+
+[DISABLE]
+
+durability_aob:
+  db F3 0F 10 80 7c 05 00 00
+
+unregistersymbol(durability_aob)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>16273</ID>
+      <Description>"MÁS TRUCOS DISPONIBLES AQUÍ"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$LUA}
+  if syntaxcheck then return end
+  [ENABLE]
+
+--¡Tabla actualizada! (Inicio)
+    --messageDialog('¿Activar modo oscuro?', mtInformation,mbYes,mbNo)
+    if messageDialog("¡Tabla actualizada con más trucos disponibles!\r\n\r\nNecesitarás Mod Engine para obtener más trucos y la nueva tabla actualizada\r\n\r\n¿Descargar Mod Engine?", mtConfirmation, mbYes, mbNo) ==mrYes then
+       shellExecute("https://modengine.net")
+    else
+    end
+--¡Tabla actualizada! (Fin)
+  [DISABLE]
+
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <LuaScript>--¡Tabla actualizada! (Inicio)
+    --messageDialog('¿Activar modo oscuro?', mtInformation,mbYes,mbNo)
+    if messageDialog("¡Tabla actualizada con más trucos disponibles!\r\n\r\nNecesitarás Mod Engine para obtener más trucos y la nueva tabla actualizada\r\n\r\n¿Descargar Mod Engine?", mtConfirmation, mbYes, mbNo) ==mrYes then
+       shellExecute("https://modengine.net")
+    else
+    end
+--¡Tabla actualizada! (Fin)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</LuaScript>
+</CheatTable>
